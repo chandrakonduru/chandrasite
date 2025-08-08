@@ -27,51 +27,47 @@ export default function BlogPage() {
       : posts.filter((post) => post.category === activeCategory);
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold mb-12">Blog & Articles</h1>
-
+    <section className="min-h-screen bg-background py-24 px-4">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-heading text-4xl sm:text-5xl font-bold mb-12">Blog & Articles</h1>
         {/* Category Filter */}
         <div className="flex gap-4 mb-12 overflow-x-auto pb-4">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full whitespace-nowrap ${
+              className={`px-4 py-2 rounded-full whitespace-nowrap font-mono border transition-colors ${
                 activeCategory === category
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-accent text-background border-accent'
+                  : 'bg-transparent text-accent border-accent hover:bg-accent hover:text-background'
               }`}
             >
               {category}
             </button>
           ))}
         </div>
-
         {/* Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {filteredPosts.map((post, index) => (
             <motion.article
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
+              className="group bg-[#112240] rounded-lg overflow-hidden shadow-lg border border-[#233554] hover:scale-[1.02] hover:shadow-2xl transition-transform"
             >
               <div className="p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-sm text-blue-600">{post.category}</span>
-                  <span className="text-sm text-gray-500">{post.readTime}</span>
+                  <span className="text-xs font-mono text-accent bg-[#233554] px-2 py-1 rounded">{post.category}</span>
+                  <span className="text-xs text-subheading font-mono">{post.readTime}</span>
                 </div>
-                <h2 className="text-xl font-bold mb-2">{post.title}</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {post.excerpt}
-                </p>
+                <h2 className="text-heading text-xl font-bold mb-2">{post.title}</h2>
+                <p className="text-body mb-4">{post.excerpt}</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">{post.date}</span>
+                  <span className="text-xs text-subheading font-mono">{post.date}</span>
                   <Link
                     href={`/blog/${post.id}`}
-                    className="text-blue-600 hover:text-blue-700"
+                    className="text-accent hover:underline font-mono"
                   >
                     Read more →
                   </Link>
@@ -81,6 +77,6 @@ export default function BlogPage() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
